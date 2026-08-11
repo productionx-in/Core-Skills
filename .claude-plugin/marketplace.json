@@ -5,7 +5,7 @@
     "url": "https://productionx.in"
   },
   "metadata": {
-    "description": "Production X's one-man-army skill set: 99 skills across brand, marketing, design, backend and build/test.",
+    "description": "Production X's one-man-army skill set: 100 skills across brand, marketing, design, backend and build/test.",
     "version": "1.0.0",
     "repository": "https://github.com/productionxin/Assets"
   },
@@ -16,7 +16,7 @@
       "source": "./",
       "version": "1.0.0",
       "strict": false,
-      "description": "All 99 skills: 27 brand, 51 marketing, 6 design, 10 backend, 5 research and build/test — plus the shared integration reference at .claude/tools/.",
+      "description": "All 100 skills: 27 brand, 51 marketing, 7 design, 10 backend, 5 research and build/test — plus the shared integration reference at .claude/tools/.",
       "skills": [
         "./.claude/skills/ab-testing",
         "./.claude/skills/ad-creative",
@@ -66,6 +66,7 @@
         "./.claude/skills/deployment-patterns",
         "./.claude/skills/design-system",
         "./.claude/skills/devops-automation",
+        "./.claude/skills/diagram-design",
         "./.claude/skills/directory-submissions",
         "./.claude/skills/docker-patterns",
         "./.claude/skills/domain-name-brainstormer",
@@ -223,11 +224,12 @@
       "source": "./",
       "version": "1.0.0",
       "strict": false,
-      "description": "6 design skills: UI/UX intelligence (84 styles, 161 palettes, 73 font pairings), shadcn/Tailwind styling, design tokens, brand assets, slides and banners.",
+      "description": "7 design skills: UI/UX intelligence, Tailwind/shadcn, design tokens, brand assets, slides, banners, and technical/product diagrams (27 types: architecture, ER, flowchart, sequence, org chart and more).",
       "skills": [
         "./.claude/skills/banner-design",
         "./.claude/skills/brand",
         "./.claude/skills/design-system",
+        "./.claude/skills/diagram-design",
         "./.claude/skills/slides",
         "./.claude/skills/ui-styling",
         "./.claude/skills/ui-ux-pro-max"

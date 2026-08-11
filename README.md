@@ -3,12 +3,12 @@
 <p align="center"><sub>productionxin/Assets · maintained by Production X</sub></p>
 
 <p align="center">
-  <strong>Production X's working toolkit — 99 skills for brand, marketing, design and backend, installable into any project as a Claude Code plugin.</strong>
+  <strong>Production X's working toolkit — 100 skills for brand, marketing, design and backend, installable into any project as a Claude Code plugin.</strong>
 </p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Production%20X-toolkit-C9A84C.svg" alt="Production X toolkit"/>
-  <img src="https://img.shields.io/badge/skills-99-8A2BE2.svg" alt="99 skills"/>
+  <img src="https://img.shields.io/badge/skills-100-8A2BE2.svg" alt="100 skills"/>
   <img src="https://img.shields.io/badge/install-plugin%20marketplace-blue.svg" alt="Plugin marketplace"/>
   <img src="https://img.shields.io/badge/licences-MIT%20%2F%20Apache--2.0-brightgreen.svg" alt="Licences"/>
 </p>
@@ -24,7 +24,7 @@ Run these once, from any project:
 /plugin install one-man-army@productionx-skills
 ```
 
-All 99 skills are then available on that machine. `/plugin marketplace update` pulls later changes.
+All 100 skills are then available on that machine. `/plugin marketplace update` pulls later changes.
 
 Working inside this repository, they load automatically — no install needed.
 
@@ -35,7 +35,7 @@ Working inside this repository, they load automatically — no install needed.
 | **Marketing** | 51 | SEO, ads, copywriting, email, CRO, pricing, positioning, analytics, social, PR, lifecycle, competitor research, CRM automation |
 | **Brand** | 27 | Strategy, architecture, naming, identity, voice, messaging, story, audit, measurement, rebranding, launch, D2C/B2B/personal-brand playbooks |
 | **Backend** | 10 | API design, PostgreSQL, Redis, migrations, FastAPI, Docker, deployment, CI/CD, DevOps |
-| **Design** | 6 | UI/UX intelligence (84 styles, 161 palettes, 73 font pairings), Tailwind/shadcn, design tokens, slides, banners |
+| **Design** | 7 | UI/UX intelligence (84 styles, 161 palettes, 73 font pairings), Tailwind/shadcn, design tokens, slides, banners |
 | **Research** | 3 | Competitor ad extraction, domain brainstorming, tweet optimisation |
 | **Build & test** | 2 | Playwright web-app testing, artifact theming |
 
@@ -46,16 +46,16 @@ The marketing skills draw on [`.claude/tools/`](.claude/tools/) — a 161-file i
 
 ## Install only what a project needs
 
-`one-man-army` loads all 99 — measured at ~13,500 tokens of descriptions per session. On a focused project, install a narrower plugin:
+`one-man-army` loads all 100 — measured at ~13,700 tokens of descriptions per session. On a focused project, install a narrower plugin:
 
 | Work you're doing | Install | Skills | Always-on cost | Saving |
 | --- | --- | --- | --- | --- |
 | Backend, API, infra | `backend@productionx-skills` | 10 | ~370 | **98%** |
 | Utilities only | `toolkit@productionx-skills` | 5 | ~265 | **99%** |
-| Design, UI | `design@productionx-skills` | 6 | ~620 | **96%** |
+| Design, UI | `design@productionx-skills` | 7 | ~720 | **95%** |
 | Brand identity | `brand@productionx-skills` | 27 | ~3,750 | **73%** |
 | Growth, campaigns | `marketing@productionx-skills` | 51 | ~8,500 | **38%** |
-| Mixed or unknown | `one-man-army@productionx-skills` | 99 | ~13,500 | — |
+| Mixed or unknown | `one-man-army@productionx-skills` | 100 | ~13,700 | — |
 
 Costs are measured, not estimated. Depth inside a plugin is identical to the full set — you lose reach, never quality. Combining two narrow ones still wins: `brand` + `design` is ~4,370 against ~13,500.
 

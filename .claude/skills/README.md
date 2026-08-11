@@ -1,10 +1,10 @@
 # Production X · installed skills
 
-**99 project-level Claude skills.** Everything in this directory is picked up
+**100 project-level Claude skills.** Everything in this directory is picked up
 automatically by Claude Code when working in `Assets/`.
 
 Only the frontmatter `description` of each skill stays loaded. Measured across
-all 99: **~13,600 tokens, averaging ~136 per skill.** The bodies come to
+all 100: **~13,700 tokens, averaging ~136 per skill.** The bodies come to
 ~249,000 tokens in total but load only when a skill actually triggers, one at a
 time — median body ~2,200 tokens, heaviest (`ui-ux-pro-max`) ~11,700.
 
@@ -21,8 +21,8 @@ exposes these same skills to *any* project:
 /plugin install one-man-army@productionx-skills
 ```
 
-Seven plugins are declared. Six are local — `one-man-army` (all 99) plus `brand`
-(27), `marketing` (51), `design` (6), `backend` (10) and `toolkit` (5), for
+Seven plugins are declared. Six are local — `one-man-army` (all 100) plus `brand`
+(27), `marketing` (51), `design` (7), `backend` (10) and `toolkit` (5), for
 projects that need one area rather than everything. Each uses `source: "./"` with an explicit `skills`
 array and `strict: false`, so the marketplace entry is the complete definition and
 no `plugin.json` is needed.
@@ -35,7 +35,7 @@ Because `source` is the repository root, `../tools/` ships with every plugin and
 the marketing skills' 96 integration links keep resolving in the installed copy.
 
 **Regenerate the manifest whenever skills are added or removed** — the `skills`
-arrays list all 99 paths explicitly, and a stale entry pointing at a deleted
+arrays list all 100 paths explicitly, and a stale entry pointing at a deleted
 directory is the likely failure mode.
 
 ## External plugins
@@ -90,7 +90,7 @@ Strategy-layer brand work, one skill per discipline.
 > palette management, asset organisation, approval checklists). Both descriptions
 > now point at each other, so routing is automatic — no pruning needed.
 
-## Design — 6 skills
+## Design — 7 skills
 
 | Skill | What it does |
 | --- | --- |
@@ -100,6 +100,7 @@ Strategy-layer brand work, one skill per discipline.
 | `brand` | Brand execution: logo usage rules, type specs, palette management, asset organisation, approval checklists. |
 | `slides` | Strategic HTML presentations with Chart.js and design tokens. |
 | `banner-design` | Banners for social, ads, web heroes, and print. |
+| `diagram-design` | 27 technical/product diagram types (architecture, ER, flowchart, sequence, org chart, Gantt and more) as standalone HTML with inline SVG. |
 
 ## Backend and infrastructure — 10 skills
 
@@ -235,6 +236,7 @@ history at commit `318d3cb`.
 
 | Skill | Source |
 | --- | --- |
+| `diagram-design` | [cathrynlavery/diagram-design](https://github.com/cathrynlavery/diagram-design) — MIT, icons under MIT/CC0 |
 | The 7 design skills | `ui-ux-pro-max-skill-main.zip` — upstream plugin `ui-ux-pro-max-skill` v2.6.2 (owner: nextlevelbuilder) |
 | The 48 marketing skills, and `../tools/` | `marketingskills-main.zip` — upstream `marketingskills` (Corey Haines) |
 | The 27 brand skills | [arnabbagxd/Brand-building-skills](https://github.com/arnabbagxd/Brand-building-skills) v1.2.0 (Arnab Bag) |
@@ -316,7 +318,7 @@ them compile clean under Python 3.
 
 ## Validation
 
-90 of 99 skills pass Anthropic's official `skills-ref validate`. The 9 that do
+91 of 100 skills pass Anthropic's official `skills-ref validate`. The 9 that do
 not all fail for the same harmless reason — extra frontmatter keys that Claude
 Code accepts but the stricter published spec does not list:
 
