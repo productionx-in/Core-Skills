@@ -318,12 +318,16 @@ ${FONTS}${BASE}${PHOTO_CSS}
 const fs = require('fs');
 const path = require('path');
 
-// Auto-detect the portrait: first photo.* sitting next to this script.
+// Auto-detect the portrait: any image dropped next to this script that isn't
+// one of our own rendered outputs. Filename doesn't matter.
 if (!CONFIG.photo) {
+  const outputs = new Set(['invitation-telugu.png', 'invitation-english.png',
+    'photo-frame-telugu.png', 'photo-frame-english.png']);
   const found = fs.readdirSync(__dirname)
-    .filter(f => /^photo\.(jpe?g|png|webp|avif)$/i.test(f))
-    .sort()[0];
-  if (found) CONFIG.photo = found;
+    .filter(f => /\.(jpe?g|png|webp|avif)$/i.test(f) && !outputs.has(f))
+    .sort((a, b) => (/^photo\./i.test(b) ? 1 : 0) - (/^photo\./i.test(a) ? 1 : 0));
+  if (found.length > 1) console.log('note: multiple images present, using the first of', found);
+  if (found[0]) CONFIG.photo = found[0];
 }
 console.log(CONFIG.photo
   ? `portrait: using ${CONFIG.photo}`
