@@ -1,0 +1,342 @@
+/* Memorial invitation + photo frame creative generator
+ * Edit CONFIG below, then run:  node design.js
+ */
+
+const CONFIG = {
+  // ---- EDIT THESE -------------------------------------------------------
+  relationTe: 'మా తల్లి గారైన',        // 'మా అమ్మమ్మ గారైన' / 'మా నాన్నమ్మ గారైన' etc.
+  relationEn: 'Our beloved mother',
+  honorificTe: 'శ్రీమతి',
+  nameTe: 'కాజా కృష్ణ కుమారి',
+  nameSuffixTe: 'గారు',
+  honorificEn: 'Smt.',
+  nameEn: 'Kaza Krishna Kumari',
+  passedOnTe: 'ది 10-08-2026 సోమవారం',
+  passedOnEn: 'Monday, 10 August 2026',
+  venueTe: ['కార్యస్థలం:', '[వేదిక పేరు],', '[ప్రాంతం],', '[నగరం].'],
+  venueEn: ['Venue:', '[Venue name],', '[Area],', '[City].'],
+  timeTe: 'ఉదయం 8 గంటల నుండి',
+  timeEn: 'From 8:00 AM onwards',
+  fromTe: ['హేమంత్,', 'మీరా,', 'హర్ష,', 'మేధ.'],
+  fromEn: ['Hemanth,', 'Meera,', 'Harsha,', 'Medha.'],
+  fromLabelTe: 'ఇట్లు కుటుంబ సభ్యులు:',
+  fromLabelEn: 'With heavy hearts,',
+  photo: null, // e.g. 'photo.jpg' placed next to this file
+  // -----------------------------------------------------------------------
+};
+
+const SCHEDULE_TE = [
+  { d: '18-08-2026', wd: 'మంగళవారం', r: 'నిత్యకర్మ ప్రారంభం', hi: false },
+  { d: '19-08-2026', wd: 'బుధవారం', r: 'దశాహం (ధర్మోదకాలు, తిలోదకాలు)', hi: false },
+  { d: '20-08-2026', wd: 'గురువారం', r: 'ఏకాదశ, షోడశం', hi: false },
+  { d: '21-08-2026', wd: 'శుక్రవారం', r: 'ద్వాదశ — సపిండీకరణం, సమారాధనలు', hi: true },
+];
+
+const SCHEDULE_EN = [
+  { d: '18 Aug 2026', wd: 'Tuesday', r: 'Nithya Karma — commencement of rites', hi: false },
+  { d: '19 Aug 2026', wd: 'Wednesday', r: 'Dasaha — tenth-day rites', hi: false },
+  { d: '20 Aug 2026', wd: 'Thursday', r: 'Ekadasa & Shodasa', hi: false },
+  { d: '21 Aug 2026', wd: 'Friday', r: 'Dwadasa — Sapindikaranam & Samaradhana', hi: true },
+];
+
+/* ------------------------------ shared CSS ------------------------------ */
+
+const FONTS = `
+@font-face{font-family:'NST';src:url('fonts/noto-serif-telugu-telugu-400-normal.woff2')format('woff2');font-weight:400}
+@font-face{font-family:'NST';src:url('fonts/noto-serif-telugu-telugu-500-normal.woff2')format('woff2');font-weight:500}
+@font-face{font-family:'NST';src:url('fonts/noto-serif-telugu-telugu-600-normal.woff2')format('woff2');font-weight:600}
+@font-face{font-family:'NST';src:url('fonts/noto-serif-telugu-telugu-700-normal.woff2')format('woff2');font-weight:700}
+@font-face{font-family:'Cormorant';src:url('fonts/cormorant-garamond-latin-400-normal.woff2')format('woff2');font-weight:400}
+@font-face{font-family:'Cormorant';src:url('fonts/cormorant-garamond-latin-600-normal.woff2')format('woff2');font-weight:600}
+@font-face{font-family:'Cormorant';src:url('fonts/cormorant-garamond-latin-700-normal.woff2')format('woff2');font-weight:700}
+@font-face{font-family:'EBG';src:url('fonts/eb-garamond-latin-400-normal.woff2')format('woff2');font-weight:400}
+@font-face{font-family:'EBG';src:url('fonts/eb-garamond-latin-500-normal.woff2')format('woff2');font-weight:500}
+@font-face{font-family:'EBG';src:url('fonts/eb-garamond-latin-600-normal.woff2')format('woff2');font-weight:600}
+`;
+
+const BASE = `
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ivory:#FAF6EE; --ivory-2:#F3ECDF;
+  --gold:#B08A46; --gold-lt:#D8BC85; --gold-dk:#8A6A2F;
+  --ink:#3B322B; --ink-soft:#5E5248;
+  --maroon:#6E2230; --accent:#A32430;
+}
+body{background:#fff}
+.card{position:relative;overflow:hidden;
+  background:
+    radial-gradient(120% 90% at 50% 0%, #FFFDF8 0%, var(--ivory) 46%, var(--ivory-2) 100%);
+  color:var(--ink);-webkit-font-smoothing:antialiased}
+/* paper grain */
+.card::after{content:'';position:absolute;inset:0;pointer-events:none;opacity:.05;
+  background-image:radial-gradient(circle at 1px 1px, #6b5533 1px, transparent 0);
+  background-size:4px 4px}
+.frame{position:absolute;border:1px solid var(--gold);}
+.rule{height:1px;background:linear-gradient(90deg,transparent,var(--gold-lt) 18%,var(--gold) 50%,var(--gold-lt) 82%,transparent)}
+.diamond{width:7px;height:7px;background:var(--gold);transform:rotate(45deg);flex:0 0 auto}
+.orn{display:flex;align-items:center;justify-content:center;gap:12px}
+.orn .rule{width:110px}
+`;
+
+/* ornamental corner spray — lotus + leaf, muted rose-gold */
+function cornerSVG(size = 200) {
+  return `<svg class="corner" width="${size}" height="${size}" viewBox="0 0 200 200" fill="none">
+  <g stroke="#B08A46" stroke-width="1.6" stroke-linecap="round" fill="none" opacity=".85">
+    <path d="M6 76 C 44 74, 74 44, 76 6"/>
+    <path d="M6 96 C 54 92, 92 54, 96 6" opacity=".55"/>
+    <path d="M22 108 C 40 104, 52 92, 58 74"/>
+    <path d="M40 128 C 62 122, 80 104, 88 82"/>
+  </g>
+  <g fill="#C99C6B" opacity=".5">
+    ${[[30,58,14,-38],[58,30,14,52],[46,46,12,8],[70,74,11,45],[26,92,10,-20],[92,26,10,70]]
+      .map(([x,y,r,rot])=>`<g transform="translate(${x} ${y}) rotate(${rot})">
+        ${[0,60,120,180,240,300].map(a=>`<ellipse cx="0" cy="${-r*0.55}" rx="${r*0.3}" ry="${r*0.55}" transform="rotate(${a})"/>`).join('')}
+        <circle r="${r*0.22}" fill="#B08A46"/></g>`).join('')}
+  </g>
+  <g fill="#9AA87B" opacity=".55">
+    ${[[16,120,16,60],[36,140,13,55],[120,16,16,-30],[140,36,13,-35],[64,100,12,20],[100,64,12,70]]
+      .map(([x,y,l,rot])=>`<path transform="translate(${x} ${y}) rotate(${rot})"
+        d="M0 0 C ${l*0.7} ${-l*0.5}, ${l*1.3} ${-l*0.2}, ${l*1.6} ${l*0.15}
+           C ${l*1.1} ${l*0.6}, ${l*0.4} ${l*0.5}, 0 0 Z"/>`).join('')}
+  </g>
+</svg>`;
+}
+
+/* restrained L-bracket for corners that sit next to text */
+function cornerBracket(size = 120) {
+  return `<svg class="corner" width="${size}" height="${size}" viewBox="0 0 120 120" fill="none">
+  <g stroke="#B08A46" stroke-width="1.6" stroke-linecap="round" opacity=".9">
+    <path d="M4 62 L4 4 L62 4"/>
+    <path d="M14 74 L14 14 L74 14" opacity=".45"/>
+  </g>
+  <g transform="translate(4 4)"><rect x="-4" y="-4" width="8" height="8"
+     fill="#B08A46" transform="rotate(45)"/></g>
+  <g fill="#C99C6B" opacity=".45" transform="translate(40 40) rotate(45)">
+    ${[0,60,120,180,240,300].map(a=>`<ellipse cx="0" cy="-6" rx="3.2" ry="6" transform="rotate(${a})"/>`).join('')}
+    <circle r="2.4" fill="#B08A46"/>
+  </g>
+</svg>`;
+}
+
+function photoBlock(cfg, w, h) {
+  const inner = cfg.photo
+    ? `<img src="${cfg.photo}" alt="">`
+    : `<div class="ph">
+         <svg viewBox="0 0 100 120" width="58%" fill="none" stroke="#B79E77" stroke-width="2.4" stroke-linecap="round">
+           <circle cx="50" cy="40" r="21"/>
+           <path d="M14 112 C 16 82, 32 68, 50 68 C 68 68, 84 82, 86 112"/>
+         </svg>
+         <span>PHOTO</span>
+       </div>`;
+  return `<div class="photo" style="--pw:${w}px;--ph:${h}px">
+    ${cornerSVG(94)}${cornerSVG(94)}${cornerSVG(94)}${cornerSVG(94)}
+    <div class="photo-in">${inner}</div>
+  </div>`;
+}
+
+const PHOTO_CSS = `
+.photo{position:relative;width:var(--pw);height:var(--ph);flex:0 0 auto}
+.photo .corner{position:absolute;opacity:.9}
+.photo .corner:nth-of-type(1){top:-26px;left:-26px}
+.photo .corner:nth-of-type(2){top:-26px;right:-26px;transform:scaleX(-1)}
+.photo .corner:nth-of-type(3){bottom:-26px;left:-26px;transform:scaleY(-1)}
+.photo .corner:nth-of-type(4){bottom:-26px;right:-26px;transform:scale(-1)}
+.photo-in{position:absolute;inset:0;padding:7px;border:1.5px solid var(--gold);
+  background:linear-gradient(150deg,#E7D3A8,#B08A46 42%,#F0E2C2 58%,#9B7735);
+  box-shadow:0 10px 30px rgba(90,64,28,.20)}
+.photo-in>*{width:100%;height:100%;display:block;object-fit:cover;
+  border:1px solid rgba(255,255,255,.5)}
+.ph{background:linear-gradient(160deg,#EDE3D2,#DFD2BB);display:flex;
+  flex-direction:column;align-items:center;justify-content:center;gap:10px}
+.ph span{font:500 15px/1 'EBG',serif;letter-spacing:.34em;color:#9A8464}
+`;
+
+/* ----------------------------- invitation ------------------------------- */
+
+function invite(lang) {
+  const te = lang === 'te';
+  const c = CONFIG;
+  const sched = te ? SCHEDULE_TE : SCHEDULE_EN;
+  const F = te ? `'NST',serif` : `'Cormorant','EBG',serif`;
+  const FB = te ? `'NST',serif` : `'EBG',serif`;
+
+  const rows = sched.map(s => `
+    <div class="row${s.hi ? ' hi' : ''}">
+      <div class="rd">${s.d}</div>
+      <div class="rw">${s.wd}</div>
+      <div class="rr">${s.r}</div>
+    </div>`).join('');
+
+  const venue = (te ? c.venueTe : c.venueEn);
+  const from = (te ? c.fromTe : c.fromEn);
+
+  return `<!doctype html><html><head><meta charset="utf-8"><style>
+${FONTS}${BASE}${PHOTO_CSS}
+.card{width:1080px;height:1350px;padding:66px 74px 58px;display:flex;flex-direction:column}
+.b1{inset:26px;border-width:2.5px}
+.b2{inset:38px;border-color:var(--gold-lt)}
+.b3{inset:44px;border-color:var(--gold-lt);opacity:.6}
+.sheetcorner{position:absolute;z-index:2}
+.sheetcorner:nth-of-type(1){top:44px;left:44px}
+.sheetcorner:nth-of-type(2){top:44px;right:44px;transform:scaleX(-1)}
+.sheetcorner:nth-of-type(3){bottom:44px;left:44px;transform:scaleY(-1)}
+.sheetcorner:nth-of-type(4){bottom:44px;right:44px;transform:scale(-1)}
+.inner{position:relative;z-index:3;display:flex;flex-direction:column;height:100%;text-align:center}
+
+.om{font:${te?`500 34px`:`600 30px`}/1 ${FB};color:var(--gold-dk);letter-spacing:${te?'0':'.2em'};margin-bottom:14px}
+.rel{font:${te?`500 32px`:`500 30px`}/1.4 ${FB};color:var(--ink-soft);margin:14px 0 12px;
+  letter-spacing:${te?'0':'.04em'}}
+.nameplate{border-top:1.5px solid var(--gold);border-bottom:1.5px solid var(--gold);
+  padding:${te?'16px 0 20px':'14px 0 16px'};margin:0 12px}
+.nm{font:${te?`700 62px`:`700 66px`}/1.24 ${F};color:var(--maroon);letter-spacing:${te?'0':'.012em'}}
+.nm small{font-size:${te?'40px':'40px'};font-weight:${te?500:600};color:var(--ink);letter-spacing:${te?'0':'.06em'}}
+
+.mid{display:flex;align-items:stretch;gap:42px;margin:36px 0 34px;text-align:left}
+.midcol{display:flex;flex-direction:column;justify-content:center;gap:26px;flex:1}
+.venue{border-left:2px solid var(--gold-lt);padding-left:18px}
+.venue,.venue .time{font:${te?`400 25px`:`400 25px`}/1.5 ${FB};color:var(--ink)}
+.passed{font:${te?`400 29px`:`400 28px`}/1.58 ${FB};color:var(--ink)}
+.passed b{font-weight:${te?600:600};color:var(--maroon)}
+
+.schedule{margin-top:auto;padding-top:0}
+.sched-h{font:${te?`600 26px`:`600 23px`}/1 ${FB};letter-spacing:${te?'.02em':'.22em'};
+  color:var(--gold-dk);text-transform:${te?'none':'uppercase'};margin-bottom:14px;
+  text-align:left;padding-left:14px;margin-bottom:18px}
+.row{display:grid;grid-template-columns:${te?'232px 168px 1fr':'214px 156px 1fr'};
+  align-items:baseline;gap:12px;text-align:left;padding:16px 14px;border-radius:3px}
+.row+.row{border-top:1px solid rgba(176,138,70,.28)}
+.rd{font:${te?`600 27px`:`600 26px`}/1.3 ${FB};color:var(--maroon);letter-spacing:.01em}
+.rw{font:${te?`400 25px`:`400 24px`}/1.3 ${FB};color:var(--ink-soft)}
+.rr{font:${te?`500 26px`:`500 25px`}/1.35 ${FB};color:var(--ink)}
+.row.hi{background:rgba(163,36,48,.055);border-radius:6px}
+.row.hi .rd,.row.hi .rr{color:var(--accent);font-weight:${te?700:600}}
+.row.hi .rw{color:#8A3038}
+
+.foot{margin-top:30px;padding-top:22px;font-family:${FB};
+  border-top:1px solid rgba(176,138,70,.4);text-align:center}
+.lbl{font-family:${FB};font-weight:600;color:var(--gold-dk);display:block;
+  margin-bottom:8px;letter-spacing:${te?'0':'.06em'};font-size:${te?'25px':'24px'}}
+.foot em{font-style:normal;font-weight:${te?700:600};color:var(--maroon);
+  font:${te?`700 31px`:`600 32px`}/1.4 ${F};letter-spacing:${te?'0':'.02em'}}
+.time{font:${te?`500 24px`:`500 23px`}/1.4 ${FB};color:var(--ink-soft);margin-top:8px}
+</style></head><body>
+<div class="card">
+  <div class="frame b1"></div><div class="frame b2"></div><div class="frame b3"></div>
+  ${cornerSVG(150).replace('class="corner"','class="sheetcorner"')}
+  ${cornerSVG(150).replace('class="corner"','class="sheetcorner"')}
+  ${cornerBracket(84).replace('class="corner"','class="sheetcorner"')}
+  ${cornerBracket(84).replace('class="corner"','class="sheetcorner"')}
+  <div class="inner">
+    <div class="orn"><span class="rule"></span><span class="diamond"></span><span class="rule"></span></div>
+    <div class="rel">${te ? c.relationTe : c.relationEn}</div>
+    <div class="nameplate">
+      <div class="nm"><small>${te ? c.honorificTe : c.honorificEn}</small> ${te ? c.nameTe : c.nameEn} ${te ? `<small>${c.nameSuffixTe}</small>` : ''}</div>
+    </div>
+    <div class="mid">
+      ${photoBlock(c, 344, 470)}
+      <div class="midcol">
+        <div class="passed">${te
+          ? `<b>${c.passedOnTe}</b> నాడు స్వర్గస్తులైనారని తెలియజేయుటకు ఎంతో చింతిస్తున్నాము.<br><br>వారి ఉత్తరక్రియలు క్రింది విధముగా జరుపబడును.`
+          : `It is with profound sorrow that we inform you of her passing on <b>${c.passedOnEn}</b>.<br><br>The funeral rites will be observed as follows.`}</div>
+        <div class="venue"><span class="lbl">${venue[0]}</span>${venue.slice(1).join(' ')}
+          <div class="time">${te ? c.timeTe : c.timeEn}</div></div>
+      </div>
+    </div>
+    <div class="schedule">
+      <div class="sched-h">${te ? 'ఉత్తరక్రియల వివరములు' : 'Order of Rites'}</div>
+      ${rows}
+    </div>
+    <div class="foot">
+      <span class="lbl">${te ? c.fromLabelTe : c.fromLabelEn}</span>
+      <em>${from.join(' ')}</em>
+    </div>
+  </div>
+</div></body></html>`;
+}
+
+/* -------------------------- photo frame creative ------------------------- */
+
+function frame(lang) {
+  const te = lang === 'te';
+  const c = CONFIG;
+  const F = te ? `'NST',serif` : `'Cormorant','EBG',serif`;
+  const FB = te ? `'NST',serif` : `'EBG',serif`;
+
+  return `<!doctype html><html><head><meta charset="utf-8"><style>
+${FONTS}${BASE}${PHOTO_CSS}
+.card{width:1080px;height:1080px;padding:48px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center}
+.b1{inset:22px;border-width:3px}
+.b2{inset:34px;border-color:var(--gold-lt)}
+.sheetcorner{position:absolute;z-index:2}
+.sheetcorner:nth-of-type(1){top:38px;left:38px}
+.sheetcorner:nth-of-type(2){top:38px;right:38px;transform:scaleX(-1)}
+.sheetcorner:nth-of-type(3){bottom:38px;left:38px;transform:scaleY(-1)}
+.sheetcorner:nth-of-type(4){bottom:38px;right:38px;transform:scale(-1)}
+.inner{position:relative;z-index:3;display:flex;flex-direction:column;align-items:center;
+  text-align:center}
+.om{font:${te?'600 36px':'600 31px'}/1 ${FB};color:var(--gold-dk);letter-spacing:${te?'.02em':'.24em'};
+  margin-bottom:34px}
+.photo{margin-bottom:8px}
+.nm{font:${te?'700 52px':'700 56px'}/1.26 ${F};color:var(--maroon);margin-top:56px;
+  letter-spacing:${te?'0':'.012em'}}
+.nm small{font-size:${te?'36px':'36px'};font-weight:${te?500:600};color:var(--ink);
+  letter-spacing:${te?'0':'.06em'}}
+.dates{font:${te?'500 28px':'500 27px'}/1.5 ${FB};color:var(--ink-soft);margin-top:14px;
+  letter-spacing:${te?'0':'.05em'}}
+.blessing{font:${te?'500 28px':'500 26px'}/1.5 ${FB};color:var(--gold-dk);margin-top:22px;
+  letter-spacing:${te?'0':'.07em'};font-style:${te?'normal':'italic'}}
+.orn{margin-top:20px}
+.orn .rule{width:150px}
+</style></head><body>
+<div class="card">
+  <div class="frame b1"></div><div class="frame b2"></div>
+  ${cornerSVG(160).replace('class="corner"','class="sheetcorner"')}
+  ${cornerSVG(160).replace('class="corner"','class="sheetcorner"')}
+  ${cornerSVG(160).replace('class="corner"','class="sheetcorner"')}
+  ${cornerSVG(160).replace('class="corner"','class="sheetcorner"')}
+  <div class="inner">
+    <div class="om">${te ? 'ఓం శాంతిః' : 'OM SHANTI'}</div>
+    ${photoBlock(c, 520, 624)}
+    <div class="nm"><small>${te ? c.honorificTe : c.honorificEn}</small> ${te ? c.nameTe : c.nameEn} ${te ? `<small>${c.nameSuffixTe}</small>` : ''}</div>
+    <div class="dates">${te ? `స్వర్గస్థులైన తేదీ — ${c.passedOnTe}` : `Passed away on ${c.passedOnEn}`}</div>
+    <div class="orn"><span class="rule"></span><span class="diamond"></span><span class="rule"></span></div>
+    <div class="blessing">${te ? 'వారి ఆత్మకు శాంతి కలుగుగాక' : 'May her soul rest in eternal peace'}</div>
+  </div>
+</div></body></html>`;
+}
+
+/* -------------------------------- render -------------------------------- */
+
+const fs = require('fs');
+const path = require('path');
+const out = __dirname;
+const pages = {
+  'invitation-telugu.html': invite('te'),
+  'invitation-english.html': invite('en'),
+  'photo-frame-telugu.html': frame('te'),
+  'photo-frame-english.html': frame('en'),
+};
+for (const [f, html] of Object.entries(pages)) fs.writeFileSync(path.join(out, f), html);
+
+(async () => {
+  const { chromium } = require('/opt/node22/lib/node_modules/playwright');
+  const b = await chromium.launch();
+  const pg = await b.newPage({ deviceScaleFactor: 2 });
+  for (const f of Object.keys(pages)) {
+    await pg.goto('file://' + path.join(out, f));
+    await pg.evaluate(() => document.fonts.ready);
+    await pg.waitForTimeout(300);
+    const fit = await pg.evaluate(() => {
+      const i = document.querySelector('.inner'), c = document.querySelector('.card');
+      const cs = getComputedStyle(c);
+      const avail = c.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+      return { used: Math.ceil(i.scrollHeight), avail: Math.floor(avail) };
+    });
+    console.log('   fit: used', fit.used, '/ avail', fit.avail, fit.used > fit.avail ? '*** OVERFLOW ***' : 'ok');
+    const el = await pg.$('.card');
+    await el.screenshot({ path: path.join(out, f.replace('.html', '.png')) });
+    console.log('rendered', f.replace('.html', '.png'));
+  }
+  await b.close();
+})();
