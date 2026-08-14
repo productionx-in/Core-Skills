@@ -16,8 +16,6 @@ const CONFIG = {
   passedOnEn: 'Monday, 10 August 2026',
   venueTe: ['కార్యస్థలం:', 'భారత్ సేవాశ్రమ్ సంఘ్,', 'లోయర్ ట్యాంక్ బండ్,', 'హైదరాబాద్.'],
   venueEn: ['Venue:', 'Bharat Sevashram Sangha,', 'Lower Tank Bund,', 'Hyderabad.'],
-  timeTe: 'ఉదయం 8 గంటల నుండి',
-  timeEn: 'From 8:00 AM onwards',
   fromGroupsTe: [['కుమార్తెలు', 'మీరా, మేధ'], ['అల్లుళ్లు', 'హేమంత్, హర్ష']],
   fromGroupsEn: [['Daughters', 'Meera, Medha'], ['Sons-in-law', 'Hemanth, Harsha']],
   fromLabelTe: 'ఇట్లు',
@@ -30,14 +28,14 @@ const CONFIG = {
 
 const SCHEDULE_TE = [
   { d: '19-08-2026', wd: 'బుధవారం', r: 'దశాహం (ధర్మోదకాలు, తిలోదకాలు)', hi: false },
-  { d: '20-08-2026', wd: 'గురువారం', r: 'ఏకాదశ, షోడశం', hi: false },
-  { d: '21-08-2026', wd: 'శుక్రవారం', r: 'ద్వాదశ — సపిండీకరణం, సమారాధనలు', hi: true },
+  { d: '20-08-2026', wd: 'గురువారం', r: 'షోడశం', hi: false },
+  { d: '21-08-2026', wd: 'శుక్రవారం', r: 'సపిండీకరణం, సమారాధనలు', hi: true },
 ];
 
 const SCHEDULE_EN = [
   { d: '19 Aug 2026', wd: 'Wednesday', r: 'Dasaha — tenth-day rites', hi: false },
-  { d: '20 Aug 2026', wd: 'Thursday', r: 'Ekadasa & Shodasa', hi: false },
-  { d: '21 Aug 2026', wd: 'Friday', r: 'Dwadasa — Sapindikaranam & Samaradhana', hi: true },
+  { d: '20 Aug 2026', wd: 'Thursday', r: 'Shodasa', hi: false },
+  { d: '21 Aug 2026', wd: 'Friday', r: 'Sapindikaranam & Samaradhana', hi: true },
 ];
 
 /* ------------------------------ shared CSS ------------------------------ */
@@ -163,7 +161,7 @@ function invite(lang) {
 
   const rows = sched.map(s => `
     <div class="row${s.hi ? ' hi' : ''}">
-      <div class="rd">${s.d}</div>
+      <div class="rd">${te ? 'ది : ' : ''}${s.d}</div>
       <div class="rw">${s.wd}</div>
       <div class="rr">${s.r}</div>
     </div>`).join('');
@@ -187,12 +185,12 @@ ${FONTS}${BASE}${PHOTO_CSS}
 .om{font:${te?`500 34px`:`600 30px`}/1 ${FB};color:var(--gold-dk);letter-spacing:${te?'0':'.2em'};margin-bottom:14px}
 .rel{font:${te?`500 32px`:`500 30px`}/1.4 ${FB};color:var(--ink-soft);margin:14px 0 12px;
   letter-spacing:${te?'0':'.04em'}}
-.nameplate{border-top:1.5px solid var(--gold);border-bottom:1.5px solid var(--gold);
-  padding:${te?'16px 0 20px':'14px 0 16px'};margin:0 12px}
+.nameplate{border:1.5px solid var(--gold);width:fit-content;
+  padding:${te?'12px 34px 16px':'10px 34px 12px'};margin:0 auto}
 .nm{font:${te?`700 62px`:`700 66px`}/1.24 ${F};color:var(--maroon);letter-spacing:${te?'0':'.012em'}}
 .nm small{font-size:${te?'40px':'40px'};font-weight:${te?500:600};color:var(--ink);letter-spacing:${te?'0':'.06em'}}
 
-.mid{display:flex;align-items:stretch;gap:42px;margin:36px 0 24px;text-align:left}
+.mid{display:flex;align-items:stretch;gap:42px;margin:32px 0 18px;text-align:left}
 .midcol{display:flex;flex-direction:column;justify-content:center;gap:26px;flex:1}
 .venue{border-left:2px solid var(--gold-lt);padding-left:18px}
 .venue,.venue .time{font:${te?`400 25px`:`400 25px`}/1.5 ${FB};color:var(--ink)}
@@ -204,7 +202,7 @@ ${FONTS}${BASE}${PHOTO_CSS}
   color:var(--gold-dk);text-transform:${te?'none':'uppercase'};margin-bottom:14px;
   text-align:left;padding-left:14px;margin-bottom:18px}
 .row{display:grid;grid-template-columns:${te?'232px 168px 1fr':'214px 156px 1fr'};
-  align-items:baseline;gap:12px;text-align:left;padding:20px 14px;border-radius:3px}
+  align-items:baseline;gap:12px;text-align:left;padding:15px 14px;border-radius:3px}
 .row+.row{border-top:1px solid rgba(176,138,70,.28)}
 .rd{font:${te?`600 27px`:`600 26px`}/1.3 ${FB};color:var(--maroon);letter-spacing:.01em}
 .rw{font:${te?`400 25px`:`400 24px`}/1.3 ${FB};color:var(--ink-soft)}
@@ -213,7 +211,9 @@ ${FONTS}${BASE}${PHOTO_CSS}
 .row.hi .rd,.row.hi .rr{color:var(--accent);font-weight:${te?700:600}}
 .row.hi .rw{color:#8A3038}
 
-.foot{margin-top:30px;padding-top:22px;font-family:${FB};
+.closing{font:${te?`500 26px`:`500 25px`}/1.4 ${FB};color:var(--ink-soft);
+  text-align:center;margin-top:18px}
+.foot{margin-top:18px;padding-top:20px;font-family:${FB};
   border-top:1px solid rgba(176,138,70,.4);text-align:center}
 .lbl{font-family:${FB};font-weight:600;color:var(--gold-dk);display:block;
   margin-bottom:8px;letter-spacing:${te?'0':'.06em'};font-size:${te?'25px':'24px'}}
@@ -242,16 +242,18 @@ ${FONTS}${BASE}${PHOTO_CSS}
       ${photoBlock(c, 344, 516)}
       <div class="midcol">
         <div class="passed">${te
-          ? `<b>${c.passedOnTe}</b> నాడు స్వర్గస్థులైనారని తెలియజేయుటకు ఎంతో చింతిస్తున్నాము.<br><br>వారి ఉత్తరక్రియలు క్రింది విధముగా జరుపబడును.`
-          : `It is with profound sorrow that we inform you of her passing on <b>${c.passedOnEn}</b>.<br><br>The ceremonies will be held as follows.`}</div>
-        <div class="venue"><span class="lbl">${venue[0]}</span>${venue.slice(1).join('<br>')}
-          <div class="time">${te ? c.timeTe : c.timeEn}</div></div>
+          ? `<b>${c.passedOnTe}</b> ఉదయం 8 గంటలకు స్వర్గస్థురాలైనారని తెలియజేయుటకు ఎంతో చింతిస్తున్నాము.<br><br>వారి ఉత్తరక్రియలు క్రింది విధముగా జరుపబడును.`
+          : `It is with profound sorrow that we inform you of her passing on <b>${c.passedOnEn} at 8:00&nbsp;AM</b>.<br><br>The ceremonies will be held as follows.`}</div>
+        <div class="venue"><span class="lbl">${venue[0]}</span>${venue.slice(1).join('<br>')}</div>
       </div>
     </div>
     <div class="schedule">
       <div class="sched-h">${te ? 'ఉత్తరక్రియల వివరములు' : 'Order of Rites'}</div>
       ${rows}
     </div>
+    <div class="closing">${te
+      ? 'జరపబడును కావున తెలియజేయనైనది.'
+      : 'This is to respectfully inform you.'}</div>
     <div class="foot">
       <span class="lbl">${te ? c.fromLabelTe : c.fromLabelEn}</span>
       ${groups.map(([role, names]) => `<div class="grp">
@@ -306,7 +308,7 @@ ${FONTS}${BASE}${PHOTO_CSS}
     <div class="om">${te ? 'ఓం శాంతిః' : 'OM SHANTI'}</div>
     ${photoBlock(c, 520, 624)}
     <div class="nm"><small>${te ? c.honorificTe : c.honorificEn}</small> ${te ? c.nameTe : c.nameEn} ${te ? `<small>${c.nameSuffixTe}</small>` : ''}</div>
-    <div class="dates">${te ? `స్వర్గస్థులైన తేదీ — ${c.passedOnPlainTe}` : `Passed away on ${c.passedOnEn}`}</div>
+    <div class="dates">${te ? `స్వర్గస్థురాలైన తేదీ — ${c.passedOnPlainTe}` : `Passed away on ${c.passedOnEn}`}</div>
     <div class="orn"><span class="rule"></span><span class="diamond"></span><span class="rule"></span></div>
     <div class="blessing">${te ? 'వారి ఆత్మకు శాంతి కలుగుగాక' : 'May her soul rest in eternal peace'}</div>
   </div>
