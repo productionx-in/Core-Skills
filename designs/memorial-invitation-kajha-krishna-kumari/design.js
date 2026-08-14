@@ -7,7 +7,7 @@ const CONFIG = {
   relationTe: 'మా తల్లి గారైన',        // 'మా అమ్మమ్మ గారైన' / 'మా నాన్నమ్మ గారైన' etc.
   relationEn: 'Our beloved mother',
   honorificTe: 'శ్రీమతి',
-  nameTe: 'కాఝా కృష్ణ కుమారి',
+  nameTe: 'కాజ఼ా కృష్ణ కుమారి',
   nameSuffixTe: 'గారు',
   honorificEn: 'Smt.',
   nameEn: 'Kajha Krishna Kumari',
