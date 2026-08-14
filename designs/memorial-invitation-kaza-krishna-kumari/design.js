@@ -10,7 +10,7 @@ const CONFIG = {
   nameTe: 'కాజ఼ా కృష్ణ కుమారి',
   nameSuffixTe: 'గారు',
   honorificEn: 'Smt.',
-  nameEn: 'Kajha Krishna Kumari',
+  nameEn: 'Kaza Krishna Kumari',
   passedOnTe: 'ది 10-08-2026 సోమవారం',
   passedOnPlainTe: '10-08-2026 సోమవారం',
   passedOnEn: 'Monday, 10 August 2026',
