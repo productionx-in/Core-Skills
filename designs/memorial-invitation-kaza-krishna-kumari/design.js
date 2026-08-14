@@ -26,14 +26,12 @@ const CONFIG = {
 };
 
 const SCHEDULE_TE = [
-  { d: '18-08-2026', wd: 'మంగళవారం', r: 'నిత్యకర్మ ప్రారంభం', hi: false },
   { d: '19-08-2026', wd: 'బుధవారం', r: 'దశాహం (ధర్మోదకాలు, తిలోదకాలు)', hi: false },
   { d: '20-08-2026', wd: 'గురువారం', r: 'ఏకాదశ, షోడశం', hi: false },
   { d: '21-08-2026', wd: 'శుక్రవారం', r: 'ద్వాదశ — సపిండీకరణం, సమారాధనలు', hi: true },
 ];
 
 const SCHEDULE_EN = [
-  { d: '18 Aug 2026', wd: 'Tuesday', r: 'Nithya Karma — commencement of rites', hi: false },
   { d: '19 Aug 2026', wd: 'Wednesday', r: 'Dasaha — tenth-day rites', hi: false },
   { d: '20 Aug 2026', wd: 'Thursday', r: 'Ekadasa & Shodasa', hi: false },
   { d: '21 Aug 2026', wd: 'Friday', r: 'Dwadasa — Sapindikaranam & Samaradhana', hi: true },
@@ -203,7 +201,7 @@ ${FONTS}${BASE}${PHOTO_CSS}
   color:var(--gold-dk);text-transform:${te?'none':'uppercase'};margin-bottom:14px;
   text-align:left;padding-left:14px;margin-bottom:18px}
 .row{display:grid;grid-template-columns:${te?'232px 168px 1fr':'214px 156px 1fr'};
-  align-items:baseline;gap:12px;text-align:left;padding:16px 14px;border-radius:3px}
+  align-items:baseline;gap:12px;text-align:left;padding:20px 14px;border-radius:3px}
 .row+.row{border-top:1px solid rgba(176,138,70,.28)}
 .rd{font:${te?`600 27px`:`600 26px`}/1.3 ${FB};color:var(--maroon);letter-spacing:.01em}
 .rw{font:${te?`400 25px`:`400 24px`}/1.3 ${FB};color:var(--ink-soft)}
@@ -233,7 +231,7 @@ ${FONTS}${BASE}${PHOTO_CSS}
       <div class="nm"><small>${te ? c.honorificTe : c.honorificEn}</small> ${te ? c.nameTe : c.nameEn} ${te ? `<small>${c.nameSuffixTe}</small>` : ''}</div>
     </div>
     <div class="mid">
-      ${photoBlock(c, 344, 470)}
+      ${photoBlock(c, 344, 516)}
       <div class="midcol">
         <div class="passed">${te
           ? `<b>${c.passedOnTe}</b> నాడు స్వర్గస్తులైనారని తెలియజేయుటకు ఎంతో చింతిస్తున్నాము.<br><br>వారి ఉత్తరక్రియలు క్రింది విధముగా జరుపబడును.`
