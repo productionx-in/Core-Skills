@@ -13,8 +13,8 @@ const CONFIG = {
   nameEn: 'Kaza Krishna Kumari',
   passedOnTe: 'ది 10-08-2026 సోమవారం',
   passedOnEn: 'Monday, 10 August 2026',
-  venueTe: ['కార్యస్థలం:', '[వేదిక పేరు],', '[ప్రాంతం],', '[నగరం].'],
-  venueEn: ['Venue:', '[Venue name],', '[Area],', '[City].'],
+  venueTe: ['కార్యస్థలం:', 'భారత్ సేవాశ్రమ్ సంఘ్,', 'లోయర్ ట్యాంక్ బండ్,', 'హైదరాబాద్.'],
+  venueEn: ['Venue:', 'Bharat Sevashram Sangha,', 'Lower Tank Bund,', 'Hyderabad.'],
   timeTe: 'ఉదయం 8 గంటల నుండి',
   timeEn: 'From 8:00 AM onwards',
   fromTe: ['హేమంత్,', 'మీరా,', 'హర్ష,', 'మేధ.'],
@@ -238,7 +238,7 @@ ${FONTS}${BASE}${PHOTO_CSS}
         <div class="passed">${te
           ? `<b>${c.passedOnTe}</b> నాడు స్వర్గస్తులైనారని తెలియజేయుటకు ఎంతో చింతిస్తున్నాము.<br><br>వారి ఉత్తరక్రియలు క్రింది విధముగా జరుపబడును.`
           : `It is with profound sorrow that we inform you of her passing on <b>${c.passedOnEn}</b>.<br><br>The funeral rites will be observed as follows.`}</div>
-        <div class="venue"><span class="lbl">${venue[0]}</span>${venue.slice(1).join(' ')}
+        <div class="venue"><span class="lbl">${venue[0]}</span>${venue.slice(1).join('<br>')}
           <div class="time">${te ? c.timeTe : c.timeEn}</div></div>
       </div>
     </div>

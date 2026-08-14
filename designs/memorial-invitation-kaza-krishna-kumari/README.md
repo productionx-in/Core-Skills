@@ -39,7 +39,6 @@ rather than squashed. A roughly portrait crop centred on the face works best.
 `CONFIG` at the top of `design.js` holds every editable string. These are
 placeholders or inferences and should be checked before sending:
 
-- **Venue** — `[Venue name], [Area], [City]` is a placeholder.
 - **Time** — defaults to 8:00 AM.
 - **Date of passing** — 10 August 2026 is *derived*, not given: if 19 Aug is
   the 10th day and 21 Aug the 12th, day one falls on 10 Aug 2026 (Monday).
