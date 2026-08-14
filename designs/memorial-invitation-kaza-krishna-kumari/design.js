@@ -28,7 +28,7 @@ const CONFIG = {
 
 const SCHEDULE_TE = [
   { d: '19-08-2026', wd: 'బుధవారం', r: 'దశాహం (ధర్మోదకాలు, తిలోదకాలు)', hi: false },
-  { d: '20-08-2026', wd: 'గురువారం', r: 'షోడశం', hi: false },
+  { d: '20-08-2026', wd: 'గురువారం', r: 'షోడశం.', hi: false },
   { d: '21-08-2026', wd: 'శుక్రవారం', r: 'సపిండీకరణం, సమారాధనలు', hi: true },
 ];
 
@@ -161,9 +161,8 @@ function invite(lang) {
 
   const rows = sched.map(s => `
     <div class="row${s.hi ? ' hi' : ''}">
-      <div class="rd">${te ? 'ది : ' : ''}${s.d}</div>
-      <div class="rw">${s.wd}</div>
-      <div class="rr">${s.r}</div>
+      <span class="rd">${te ? 'ది : ' : ''}${s.d}${te ? ' ' : ', '}${s.wd}</span>
+      <span class="rr">${s.r}</span>
     </div>`).join('');
 
   const venue = (te ? c.venueTe : c.venueEn);
@@ -192,7 +191,8 @@ ${FONTS}${BASE}${PHOTO_CSS}
 
 .mid{display:flex;align-items:stretch;gap:42px;margin:32px 0 18px;text-align:left}
 .midcol{display:flex;flex-direction:column;justify-content:center;gap:26px;flex:1}
-.venue{border-left:2px solid var(--gold-lt);padding-left:18px}
+.venue .lbl{text-decoration:underline;text-underline-offset:5px;
+  text-decoration-thickness:1.5px;color:var(--ink)}
 .venue,.venue .time{font:${te?`400 25px`:`400 25px`}/1.5 ${FB};color:var(--ink)}
 .passed{font:${te?`400 29px`:`400 28px`}/1.58 ${FB};color:var(--ink)}
 .passed b{font-weight:${te?600:600};color:var(--maroon)}
@@ -201,18 +201,15 @@ ${FONTS}${BASE}${PHOTO_CSS}
 .sched-h{font:${te?`600 26px`:`600 23px`}/1 ${FB};letter-spacing:${te?'.02em':'.22em'};
   color:var(--gold-dk);text-transform:${te?'none':'uppercase'};margin-bottom:14px;
   text-align:left;padding-left:14px;margin-bottom:18px}
-.row{display:grid;grid-template-columns:${te?'232px 168px 1fr':'214px 156px 1fr'};
-  align-items:baseline;gap:12px;text-align:left;padding:15px 14px;border-radius:3px}
-.row+.row{border-top:1px solid rgba(176,138,70,.28)}
-.rd{font:${te?`600 27px`:`600 26px`}/1.3 ${FB};color:var(--maroon);letter-spacing:.01em}
-.rw{font:${te?`400 25px`:`400 24px`}/1.3 ${FB};color:var(--ink-soft)}
-.rr{font:${te?`500 26px`:`500 25px`}/1.35 ${FB};color:var(--ink)}
-.row.hi{background:rgba(163,36,48,.055);border-radius:6px}
-.row.hi .rd,.row.hi .rr{color:var(--accent);font-weight:${te?700:600}}
-.row.hi .rw{color:#8A3038}
+.row{text-align:left;padding:10px 14px;line-height:1.5}
+.rd{font:${te?`600 28px`:`600 27px`}/1.5 ${FB};color:var(--maroon);letter-spacing:.01em}
+.rr{font:${te?`500 28px`:`500 27px`}/1.5 ${FB};color:var(--ink);margin-left:16px}
+.row.hi .rd{color:var(--accent);font-weight:700;
+  text-decoration:underline;text-underline-offset:6px;text-decoration-thickness:1.5px}
+.row.hi .rr{color:var(--accent);font-weight:${te?700:600}}
 
-.closing{font:${te?`500 26px`:`500 25px`}/1.4 ${FB};color:var(--ink-soft);
-  text-align:center;margin-top:18px}
+.closing{font:${te?`700 27px`:`600 26px`}/1.45 ${FB};color:var(--accent);
+  text-align:center;margin-top:14px;padding:0 14px}
 .foot{margin-top:18px;padding-top:20px;font-family:${FB};
   border-top:1px solid rgba(176,138,70,.4);text-align:center}
 .lbl{font-family:${FB};font-weight:600;color:var(--gold-dk);display:block;
