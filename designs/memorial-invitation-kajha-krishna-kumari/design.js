@@ -239,8 +239,8 @@ ${FONTS}${BASE}${PHOTO_CSS}
       ${photoBlock(c, 344, 516)}
       <div class="midcol">
         <div class="passed">${te
-          ? `<b>${c.passedOnTe}</b> ఉదయం 8 గంటలకు స్వర్గస్థురాలైనారని తెలియజేయుటకు ఎంతో చింతిస్తున్నాము.<br><br>వారి ఉత్తరక్రియలు క్రింది విధముగా జరుపబడును.`
-          : `It is with profound sorrow that we inform you of her passing on <b>${c.passedOnEn} at 8:00&nbsp;AM</b>.<br><br>The ceremonies will be held as follows.`}</div>
+          ? `<b>${c.passedOnTe}</b> రాత్రి 9.55 గంటలకు స్వర్గస్థురాలైనారని తెలియజేయుటకు ఎంతో చింతిస్తున్నాము.<br><br>వారి ఉత్తరక్రియలు క్రింది విధముగా జరుపబడును.`
+          : `It is with profound sorrow that we inform you of her passing on <b>${c.passedOnEn} at 9:55&nbsp;PM</b>.<br><br>The ceremonies will be held as follows.`}</div>
         <div class="venue"><span class="lbl">${venue[0]}</span>${venue.slice(1).join('<br>')}</div>
       </div>
     </div>
