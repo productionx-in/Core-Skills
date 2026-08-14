@@ -67,7 +67,7 @@ body{background:#fff}
 .nm{font:700 66px/1.24 'Cormorant','EBG',serif;color:var(--maroon);letter-spacing:.012em}
 .nm small{font-size:40px;font-weight:600;color:var(--ink);letter-spacing:.06em}
 
-.mid{display:flex;align-items:stretch;gap:42px;margin:36px 0 34px;text-align:left}
+.mid{display:flex;align-items:stretch;gap:42px;margin:36px 0 24px;text-align:left}
 .midcol{display:flex;flex-direction:column;justify-content:center;gap:26px;flex:1}
 .venue{border-left:2px solid var(--gold-lt);padding-left:18px}
 .venue,.venue .time{font:400 25px/1.5 'EBG',serif;color:var(--ink)}
@@ -92,8 +92,13 @@ body{background:#fff}
   border-top:1px solid rgba(176,138,70,.4);text-align:center}
 .lbl{font-family:'EBG',serif;font-weight:600;color:var(--gold-dk);display:block;
   margin-bottom:8px;letter-spacing:.06em;font-size:24px}
-.foot em{font-style:normal;font-weight:600;color:var(--maroon);
-  font:600 32px/1.4 'Cormorant','EBG',serif;letter-spacing:.02em}
+.foot .grp{display:flex;align-items:baseline;justify-content:center;gap:12px;
+  margin-top:6px}
+.foot .role{font:500 23px/1.4 'EBG',serif;color:var(--ink-soft);
+  letter-spacing:.04em}
+.foot .role::after{content:':'}
+.foot em{font-style:normal;color:var(--maroon);
+  font:600 30px/1.4 'Cormorant','EBG',serif;letter-spacing:.02em}
 .time{font:500 23px/1.4 'EBG',serif;color:var(--ink-soft);margin-top:8px}
 </style></head><body>
 <div class="card">
@@ -390,7 +395,9 @@ body{background:#fff}
     </div>
     <div class="foot">
       <span class="lbl">With heavy hearts,</span>
-      <em>Hemanth, Meera, Harsha, Medha.</em>
+      <div class="grp">
+        <span class="role">Daughters</span><em>Meera, Medha</em></div><div class="grp">
+        <span class="role">Sons-in-law</span><em>Hemanth, Harsha</em></div>
     </div>
   </div>
 </div></body></html>

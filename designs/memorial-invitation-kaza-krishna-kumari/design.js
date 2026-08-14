@@ -17,9 +17,9 @@ const CONFIG = {
   venueEn: ['Venue:', 'Bharat Sevashram Sangha,', 'Lower Tank Bund,', 'Hyderabad.'],
   timeTe: 'ఉదయం 8 గంటల నుండి',
   timeEn: 'From 8:00 AM onwards',
-  fromTe: ['హేమంత్,', 'మీరా,', 'హర్ష,', 'మేధ.'],
-  fromEn: ['Hemanth,', 'Meera,', 'Harsha,', 'Medha.'],
-  fromLabelTe: 'ఇట్లు కుటుంబ సభ్యులు:',
+  fromGroupsTe: [['కుమార్తెలు', 'మీరా, మేధ'], ['అల్లుళ్లు', 'హేమంత్, హర్ష']],
+  fromGroupsEn: [['Daughters', 'Meera, Medha'], ['Sons-in-law', 'Hemanth, Harsha']],
+  fromLabelTe: 'ఇట్లు',
   fromLabelEn: 'With heavy hearts,',
   photo: null, // e.g. 'photo.jpg' placed next to this file
   // -----------------------------------------------------------------------
@@ -166,7 +166,7 @@ function invite(lang) {
     </div>`).join('');
 
   const venue = (te ? c.venueTe : c.venueEn);
-  const from = (te ? c.fromTe : c.fromEn);
+  const groups = (te ? c.fromGroupsTe : c.fromGroupsEn);
 
   return `<!doctype html><html><head><meta charset="utf-8"><style>
 ${FONTS}${BASE}${PHOTO_CSS}
@@ -189,7 +189,7 @@ ${FONTS}${BASE}${PHOTO_CSS}
 .nm{font:${te?`700 62px`:`700 66px`}/1.24 ${F};color:var(--maroon);letter-spacing:${te?'0':'.012em'}}
 .nm small{font-size:${te?'40px':'40px'};font-weight:${te?500:600};color:var(--ink);letter-spacing:${te?'0':'.06em'}}
 
-.mid{display:flex;align-items:stretch;gap:42px;margin:36px 0 34px;text-align:left}
+.mid{display:flex;align-items:stretch;gap:42px;margin:36px 0 24px;text-align:left}
 .midcol{display:flex;flex-direction:column;justify-content:center;gap:26px;flex:1}
 .venue{border-left:2px solid var(--gold-lt);padding-left:18px}
 .venue,.venue .time{font:${te?`400 25px`:`400 25px`}/1.5 ${FB};color:var(--ink)}
@@ -214,8 +214,13 @@ ${FONTS}${BASE}${PHOTO_CSS}
   border-top:1px solid rgba(176,138,70,.4);text-align:center}
 .lbl{font-family:${FB};font-weight:600;color:var(--gold-dk);display:block;
   margin-bottom:8px;letter-spacing:${te?'0':'.06em'};font-size:${te?'25px':'24px'}}
-.foot em{font-style:normal;font-weight:${te?700:600};color:var(--maroon);
-  font:${te?`700 31px`:`600 32px`}/1.4 ${F};letter-spacing:${te?'0':'.02em'}}
+.foot .grp{display:flex;align-items:baseline;justify-content:center;gap:12px;
+  margin-top:6px}
+.foot .role{font:${te?`500 24px`:`500 23px`}/1.4 ${FB};color:var(--ink-soft);
+  letter-spacing:${te?'0':'.04em'}}
+.foot .role::after{content:':'}
+.foot em{font-style:normal;color:var(--maroon);
+  font:${te?`700 29px`:`600 30px`}/1.4 ${F};letter-spacing:${te?'0':'.02em'}}
 .time{font:${te?`500 24px`:`500 23px`}/1.4 ${FB};color:var(--ink-soft);margin-top:8px}
 </style></head><body>
 <div class="card">
@@ -246,7 +251,8 @@ ${FONTS}${BASE}${PHOTO_CSS}
     </div>
     <div class="foot">
       <span class="lbl">${te ? c.fromLabelTe : c.fromLabelEn}</span>
-      <em>${from.join(' ')}</em>
+      ${groups.map(([role, names]) => `<div class="grp">
+        <span class="role">${role}</span><em>${names}</em></div>`).join('')}
     </div>
   </div>
 </div></body></html>`;

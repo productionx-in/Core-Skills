@@ -67,7 +67,7 @@ body{background:#fff}
 .nm{font:700 62px/1.24 'NST',serif;color:var(--maroon);letter-spacing:0}
 .nm small{font-size:40px;font-weight:500;color:var(--ink);letter-spacing:0}
 
-.mid{display:flex;align-items:stretch;gap:42px;margin:36px 0 34px;text-align:left}
+.mid{display:flex;align-items:stretch;gap:42px;margin:36px 0 24px;text-align:left}
 .midcol{display:flex;flex-direction:column;justify-content:center;gap:26px;flex:1}
 .venue{border-left:2px solid var(--gold-lt);padding-left:18px}
 .venue,.venue .time{font:400 25px/1.5 'NST',serif;color:var(--ink)}
@@ -92,8 +92,13 @@ body{background:#fff}
   border-top:1px solid rgba(176,138,70,.4);text-align:center}
 .lbl{font-family:'NST',serif;font-weight:600;color:var(--gold-dk);display:block;
   margin-bottom:8px;letter-spacing:0;font-size:25px}
-.foot em{font-style:normal;font-weight:700;color:var(--maroon);
-  font:700 31px/1.4 'NST',serif;letter-spacing:0}
+.foot .grp{display:flex;align-items:baseline;justify-content:center;gap:12px;
+  margin-top:6px}
+.foot .role{font:500 24px/1.4 'NST',serif;color:var(--ink-soft);
+  letter-spacing:0}
+.foot .role::after{content:':'}
+.foot em{font-style:normal;color:var(--maroon);
+  font:700 29px/1.4 'NST',serif;letter-spacing:0}
 .time{font:500 24px/1.4 'NST',serif;color:var(--ink-soft);margin-top:8px}
 </style></head><body>
 <div class="card">
@@ -389,8 +394,10 @@ body{background:#fff}
     </div>
     </div>
     <div class="foot">
-      <span class="lbl">ఇట్లు కుటుంబ సభ్యులు:</span>
-      <em>హేమంత్, మీరా, హర్ష, మేధ.</em>
+      <span class="lbl">ఇట్లు</span>
+      <div class="grp">
+        <span class="role">కుమార్తెలు</span><em>మీరా, మేధ</em></div><div class="grp">
+        <span class="role">అల్లుళ్లు</span><em>హేమంత్, హర్ష</em></div>
     </div>
   </div>
 </div></body></html>

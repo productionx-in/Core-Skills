@@ -42,7 +42,9 @@ placeholders or inferences and should be checked before sending:
 - **Time** — defaults to 8:00 AM.
 - **Date of passing** — 10 August 2026 is *derived*, not given: if 19 Aug is
   the 10th day and 21 Aug the 12th, day one falls on 10 Aug 2026 (Monday).
-- **Relationship** — defaults to "our beloved mother" / "మా తల్లి గారైన".
+- **Relationship** — the header reads "our beloved mother" / "మా తల్లి గారైన",
+  which is correct from the daughters. The sign-off names them by role:
+  daughters Meera and Medha, sons-in-law Hemanth and Harsha.
 - **Rite names** — the 20 Aug label follows the conventional sequence; only
   the 10th day (19 Aug) and 12th day (21 Aug) were specified. The card lists
   19-21 Aug; 18 Aug was dropped at the family's request.
