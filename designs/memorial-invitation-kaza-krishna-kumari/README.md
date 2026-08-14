@@ -27,9 +27,12 @@ no network access needed at render time.
 
 The portrait slot currently shows a placeholder. To drop in the real photo:
 
-1. Put the image next to `design.js` (e.g. `photo.jpg`).
-2. Set `photo: 'photo.jpg'` in the `CONFIG` block at the top of `design.js`.
-3. Re-run `node design.js`.
+1. Put the image next to `design.js`, named `photo.jpg` (`.png`, `.webp` and
+   `.avif` also work).
+2. Re-run `node design.js` — it picks the file up automatically and prints
+   which portrait it used.
+
+To use a different filename, set `photo:` in the `CONFIG` block instead.
 
 The slot uses `object-fit: cover`, so any aspect ratio is cropped to fit
 rather than squashed. A roughly portrait crop centred on the face works best.

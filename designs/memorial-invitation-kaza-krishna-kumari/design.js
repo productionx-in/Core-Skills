@@ -22,7 +22,9 @@ const CONFIG = {
   fromGroupsEn: [['Daughters', 'Meera, Medha'], ['Sons-in-law', 'Hemanth, Harsha']],
   fromLabelTe: 'ఇట్లు',
   fromLabelEn: 'With heavy hearts,',
-  photo: null, // e.g. 'photo.jpg' placed next to this file
+  // Leave null to auto-detect: any file named photo.* next to this script is
+  // picked up automatically. Set a filename here to override.
+  photo: null,
   // -----------------------------------------------------------------------
 };
 
@@ -315,6 +317,17 @@ ${FONTS}${BASE}${PHOTO_CSS}
 
 const fs = require('fs');
 const path = require('path');
+
+// Auto-detect the portrait: first photo.* sitting next to this script.
+if (!CONFIG.photo) {
+  const found = fs.readdirSync(__dirname)
+    .filter(f => /^photo\.(jpe?g|png|webp|avif)$/i.test(f))
+    .sort()[0];
+  if (found) CONFIG.photo = found;
+}
+console.log(CONFIG.photo
+  ? `portrait: using ${CONFIG.photo}`
+  : 'portrait: none found (drop a photo.jpg here) - rendering placeholder');
 const out = __dirname;
 const pages = {
   'invitation-telugu.html': invite('te'),
