@@ -1,6 +1,6 @@
 # Working rules
 
-Skill toolkit: 99 skills in `.claude/skills/`, published as a plugin marketplace
+Skill toolkit: 100 skills in `.claude/skills/`, published as a plugin marketplace
 (`.claude-plugin/marketplace.json`). Keep this file short — it loads every session.
 
 ## Pick the profile, not everything
@@ -20,13 +20,13 @@ session. Focused plugins cost a fraction, with no loss of depth in their area:
 Combine narrow ones rather than defaulting to everything: `brand` + `design` for
 identity work, `backend` + `toolkit` for a build with browser testing.
 
-The bodies are the real weight (~249k tokens across all 99, median ~2,200 each)
+The bodies are the real weight (~249k tokens across all 100, median ~2,200 each)
 but load one at a time on trigger. Breadth is cheap; **loading the wrong skill is
 not** — that is a whole body wasted plus a wrong answer.
 
 ## Invoke skills by name when you know which
 
-With 99 skills sharing vocabulary, description-matching sometimes picks a
+With 100 skills sharing vocabulary, description-matching sometimes picks a
 neighbour. When the target is known, name it: `/cro`, `/postgres-patterns`,
 `/brand-voice`. Reserve description-matching for genuine discovery.
 
@@ -54,7 +54,7 @@ pruning — check this before optimising skills.
 
 ## Maintenance
 
-`marketplace.json` lists all 99 skill paths explicitly. **Regenerate it whenever
+`marketplace.json` lists all 100 skill paths explicitly. **Regenerate it whenever
 skills are added or removed** — a path pointing at a deleted directory is the
 likely failure mode. Verify after any change:
 
